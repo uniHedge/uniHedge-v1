@@ -33,7 +33,6 @@ contract shortTest is Test {
 
         // deploy leverage
         leverage = Leverage(factory.createLeverageContract());
-        // leverage = new Leverage();
     }
 
     function getUSDC() internal {
@@ -46,7 +45,6 @@ contract shortTest is Test {
         vm.prank(user);
         usdc.transfer(address(this), 2000e6);
     }
-
 
     function testOpenShort() public {
         // STEP #1 Get USDC 
