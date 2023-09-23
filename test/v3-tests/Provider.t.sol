@@ -6,6 +6,8 @@ import "forge-std/console.sol";
 
 import "../../src/uni-v3/Provider.sol";
 
+import {TickMath} from "@uniswap/v3-core/contracts/libraries/TickMath.sol";
+
 contract UniswapV3LiquidityTest is Test {
     int24 private constant MIN_TICK = -887272;
     int24 private constant MAX_TICK = -MIN_TICK;
@@ -37,7 +39,8 @@ contract UniswapV3LiquidityTest is Test {
         weth.approve(address(uni), type(uint).max);
 
      }
-    function testLiquidity() public {
+
+    function testSupplyLiquidityFullRange() public {
         // Track total liquidity
         uint128 liquidity;
 
@@ -94,5 +97,65 @@ contract UniswapV3LiquidityTest is Test {
         console.log("--- Decrease liquidity ---");
         console.log("amount 0", amount0);
         console.log("amount 1", amount1);
+    }
+
+    function testSupplyLiquidityConcentratedRange() public {
+        // Track total liquidity
+        uint128 liquidity;
+
+        // Mint new position
+        uint daiAmount = 1000 * 1e18;
+        uint wethAmount = 10e18;
+
+        int24 _tickLower;
+        int24 _tickUpper;
+
+        {
+        uint priceLower = 800e18; // 800 usd
+        uint priceUpper = 2000e18; // 2000 usd
+
+        uint160 sqrtPriceX96Lower = uni.priceToSqrtX96(priceLower);
+        uint160 sqrtPriceX96Upper = uni.priceToSqrtX96(priceUpper);
+
+        int24 rawTickLower = TickMath.getTickAtSqrtRatio(sqrtPriceX96Lower);
+        int24 rawTickUpper = TickMath.getTickAtSqrtRatio(sqrtPriceX96Upper);
+
+        _tickLower = uni.roundToNearestTick(rawTickLower);
+        _tickUpper = uni.roundToNearestTick(rawTickUpper);
+        }
+
+        console.log("TICK LOWER");
+
+        console.logInt(int(_tickUpper));
+        console.logInt(int(_tickLower));
+        
+        (uint tokenId, 
+        uint128 liquidityDelta,
+        uint amount0, 
+        uint amount1) = uni.mintNewPosition(
+            DAI, 
+            WETH, 
+            daiAmount, 
+            wethAmount, 
+            _tickLower,
+            _tickUpper);
+        
+        
+        liquidity += liquidityDelta;
+
+        console.log("--- Mint new position ---");
+        console.log("token id", tokenId);
+        console.log("liquidity", liquidity);
+        console.log("amount 0", amount0);
+        console.log("amount 1", amount1);
+
+        // Collect fees
+        (uint fee0, uint fee1) = uni.collectAllFees(tokenId);
+
+        console.log("--- Collect fees ---");
+        console.log("fee 0", fee0);
+        console.log("fee 1", fee1);
+
+
     }
 }

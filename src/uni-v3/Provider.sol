@@ -4,6 +4,7 @@ pragma solidity ^0.8.19;
 import "./interfaces/Interfaces.sol";
 import "forge-std/console.sol";
 
+import {UD60x18, ud, unwrap} from "@prb/math/UD60x18.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 contract UniswapV3LiquidityProvider is IERC721Receiver {
@@ -22,6 +23,20 @@ contract UniswapV3LiquidityProvider is IERC721Receiver {
         bytes calldata /* data */
     ) external pure returns (bytes4) {
         return IERC721Receiver.onERC721Received.selector;
+    }
+
+    function priceToSqrtX96(uint price) public returns (uint160) {
+        uint160 sqrtPriceX96 = uint160(ud(price).sqrt().unwrap() * 2 ** 96);
+        return sqrtPriceX96;
+    }
+
+    function roundToNearestTick(int24 tick) public pure returns (int24) {
+        int24 modTick = tick % 60;
+        if (modTick < 30) {
+            return tick - modTick; // Rounds down if below 30
+        } else {
+            return tick + (60 - modTick); // Rounds up if 30 or above
+        }
     }
 
     function mintNewPosition(
