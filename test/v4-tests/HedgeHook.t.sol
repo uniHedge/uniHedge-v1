@@ -158,13 +158,21 @@ contract HookTest is Test, Deployers, GasSnapshot {
         // uint8 hookWithdrawFee
         ) = manager.getSlot0(poolId);
 
+
+        // convert sqrt96 to base 1e18 
+        uint price = uint(sqrtPriceX96) * (uint(sqrtPriceX96)) * (1e18) >> (96 * 2);
+
+   
+
         emit log("price after swap");
         emit log_uint(sqrtPriceX96);
 
         assertEq(testHook.swapCount(), 1);
     }
 
-   
+
+
+
     function get_liquidity_xy(uint160 sp,uint160 sa,uint160 sb, uint128 Value ) public returns (uint256 x,uint256 y)  { //find_max_x
         // FullMath.mul()
         // uint256 numerator1=uint256(sp-sa);
