@@ -7,6 +7,10 @@ import "forge-std/console.sol";
 import "../../src/uni-v3/Provider.sol";
 
 contract UniswapV3LiquidityTest is Test {
+    int24 private constant MIN_TICK = -887272;
+    int24 private constant MAX_TICK = -MIN_TICK;
+    int24 private constant TICK_SPACING = 60;
+
     uint ethFork;
     string ETH_RPC = vm.envString("ETH_RPC");
 
@@ -41,7 +45,16 @@ contract UniswapV3LiquidityTest is Test {
         uint daiAmount = 10 * 1e18;
         uint wethAmount = 1e18;
         
-        (uint tokenId, uint128 liquidityDelta, uint amount0, uint amount1) = uni.mintNewPosition(DAI, WETH, daiAmount, wethAmount);
+        (uint tokenId, 
+        uint128 liquidityDelta,
+        uint amount0, 
+        uint amount1) = uni.mintNewPosition(
+            DAI, 
+            WETH, 
+            daiAmount, 
+            wethAmount, 
+            (MIN_TICK / TICK_SPACING) * TICK_SPACING,
+            (MAX_TICK / TICK_SPACING) * TICK_SPACING);
         
         console.log("in test 2");
         

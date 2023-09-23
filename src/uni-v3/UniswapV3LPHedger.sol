@@ -8,6 +8,8 @@ import "./Provider.sol";
 
 import "forge-std/console.sol";
 
+import {TickMath} from "@uniswap/v3-core/contracts/libraries/TickMath.sol";
+
 // import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 contract UniswapV3LPHedger is UniswapV3LiquidityProvider, Leverage {
@@ -19,10 +21,25 @@ contract UniswapV3LPHedger is UniswapV3LiquidityProvider, Leverage {
     }
 
 
-    function openHedgedLP(address token0, address token1, int24 tickLower, int24 tickUpper) external {
+    function priceToSqrtX96(uint price) internal returns (uint160) {
+        uint160 sqrtPriceX96 = uint160(ud(price).sqrt().unwrap() * 2 ** 96);
+        return sqrtPriceX96;
+    }
 
+
+    
+
+
+
+    function openHedgedLP(address token0, address token1, int24 tickLower, int24 tickUpper) external {
         // @dev todo: calculate the amount to supply as LP to uni, and to short
-        mintNewPosition(token0, token1, 1e18, 1e18); // filler vals`
+        mintNewPosition(token0, token1, 1e18, 1e18, tickLower, tickUpper); // filler vals`
+
+
+
+
+
+
         leverage.short(token0, token1, 1e18, ud(1e18));
     }
 
