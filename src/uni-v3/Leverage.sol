@@ -18,10 +18,6 @@ import "./Swapper.sol";
 // console log
 import "forge-std/console.sol";
 
-/// @title Algorithmic Leverage Trade Builder
-/// @author LeverEdge Labs
-/// @dev This contract is currently in development
-
 contract Leverage is Swapper {
     struct Position {
         address baseAsset;
