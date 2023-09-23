@@ -115,27 +115,18 @@ contract UniswapV3LiquidityTest is Test {
         int24 _tickUpper;
 
         {
-        uint priceLower = 800e18; // 800 usd
-        uint priceUpper = 2000e18; // 2000 usd
+        // uint priceLower = 800e18; // 800 usd
+        // uint priceUpper = 2000e18; // 2000 usd
 
-        // sqrtPriceX96 = sqrt(price) * 2 ** 96
-        console.log("sqrtx96");
-        console.log(uint160(ud(1e18).div(ud(priceLower).sqrt()).unwrap() * 2**96));
-
-        uint160 sqrtPriceX96Lower = uint160(ud(1e18).div(ud(priceLower).sqrt()).unwrap() * 2**96);
-        uint160 sqrtPriceX96Upper = uint160(ud(1e18).div(ud(priceUpper).sqrt()).unwrap() * 2**96);
-
-        // _tickLower = TickMath.getTickAtSqrtRatio(sqrtPriceX96Lower);
-        // _tickUpper = TickMath.getTickAtSqrtRatio(sqrtPriceX96Upper);
-
-        _tickLower = -73735 - 60; // 800
-        _tickUpper = _tickLower + 60; // 2000
-
+        _tickLower = 66000; // 800
+        _tickUpper = 75960; // 2000
         }
 
+                
         console.log("TICKS");
         console.logInt(int(_tickLower));
         console.logInt(int(_tickUpper));
+        
         
         (uint tokenId, 
         uint128 liquidityDelta,
@@ -147,7 +138,6 @@ contract UniswapV3LiquidityTest is Test {
             wethAmount, 
             _tickLower,
             _tickUpper);
-        
         
         liquidity += liquidityDelta;
 
@@ -163,7 +153,6 @@ contract UniswapV3LiquidityTest is Test {
         console.log("--- Collect fees ---");
         console.log("fee 0", fee0);
         console.log("fee 1", fee1);
-
 
     }
 }

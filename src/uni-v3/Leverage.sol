@@ -89,7 +89,7 @@ contract Leverage is Swapper {
         address leveragedAsset,
         uint amountBase,
         UD60x18 leverage
-    ) external returns (bool) {
+    ) public returns (bool) {
 
         IERC20(baseAsset).transferFrom(msg.sender, address(this), amountBase);
 
