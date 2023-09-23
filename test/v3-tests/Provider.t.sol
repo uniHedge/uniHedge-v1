@@ -37,7 +37,6 @@ contract UniswapV3LiquidityTest is Test {
         weth.deposit{value: 2 * 1e18}();
         dai.approve(address(uni), type(uint).max);
         weth.approve(address(uni), type(uint).max);
-
      }
 
     function testSupplyLiquidityFullRange() public {
@@ -118,21 +117,19 @@ contract UniswapV3LiquidityTest is Test {
         uint priceLower = 800e18; // 800 usd
         uint priceUpper = 2000e18; // 2000 usd
 
+        // uint160 sqrtPriceX96Lower = uint160(priceLower) ** 2
+        console.log("HERE");
+        console.log(ud(priceLower).sqrt().unwrap());
+        uint160 sqrtPriceX96Lower = uint160(ud(priceLower).sqrt().unwrap() * 2**96);
+        console.log(sqrtPriceX96Lower);
+
         // uint160 sqrtPriceX96Lower = uni.priceToSqrtX96(priceLower);
         // uint160 sqrtPriceX96Upper = uni.priceToSqrtX96(priceUpper);
-        uint160 sqrtPriceX96Lower =  2.5054144837504793e30;
-        uint160 sqrtPriceX96Upper = 3.961408125713217e30;
 
-        int24 rawTickLower = TickMath.getTickAtSqrtRatio(sqrtPriceX96Lower);
-        int24 rawTickUpper = TickMath.getTickAtSqrtRatio(sqrtPriceX96Upper);
+        int24 _tickLower = TickMath.getTickAtSqrtRatio(sqrtPriceX96Lower);
+        // int24 rawTickUpper = TickMath.getTickAtSqrtRatio(sqrtPriceX96Upper);
 
-        // @dev how the fuck does this negative work?
-        // _tickLower = -uni.roundToNearestTick(rawTickLower);
-        // _tickUpper = uni.roundToNearestTick(rawTickUpper);
-
-        _tickLower = rawTickLower;
-        _tickUpper = rawTickUpper;
-
+        // _tickLower = rawTickLower;
         }
 
         console.log("TICK LOWER");

@@ -79,8 +79,6 @@ contract Leverage is Swapper {
     }
 
 
-
-
     /// @notice Initate short function
     /// @param baseAsset address stable asset
     /// @param leveragedAsset address leveraged asset
@@ -264,7 +262,6 @@ contract Leverage is Swapper {
         uint[] memory modes = new uint[](1);
         modes[0] = 0;
 
-        console.log("pre fl");
         aaveV3.flashLoan(
             address(this),
             assets,
@@ -274,7 +271,6 @@ contract Leverage is Swapper {
             params,
             0
         );
-        console.log("post fl");
     }
 
     function executeOperation(

@@ -5,6 +5,10 @@ import "./interfaces/interfaces.sol";
 import "forge-std/console.sol";
 
 import {UD60x18, ud, unwrap} from "@prb/math/UD60x18.sol";
+import {TickMath} from "@uniswap/v3-core/contracts/libraries/TickMath.sol";
+import {FullMath} from "@uniswap/v3-core/contracts/libraries/FullMath.sol";
+
+
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 contract UniswapV3LiquidityProvider is IERC721Receiver {
@@ -38,6 +42,7 @@ contract UniswapV3LiquidityProvider is IERC721Receiver {
             return tick + (60 - modTick); // Rounds up if 30 or above
         }
     }
+
 
     function mintNewPosition(
         address token0,
