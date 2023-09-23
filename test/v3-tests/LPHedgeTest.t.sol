@@ -71,7 +71,7 @@ contract UNIV3_IL_HEDGE is Test {
         /* uint24 fee */,
         int24 _tickLower, 
         int24 _tickUpper, 
-        uint128 liquidity, 
+        uint128 liquidity,
         /* uint256 feeGrowthInside0LastX128 */,
         /* uint256 feeGrowthInside1LastX128 */,
         /* uint128 tokensOwed0 */, 
@@ -83,7 +83,7 @@ contract UNIV3_IL_HEDGE is Test {
         /* uint availableBorrowBase */,
         /* uint currentLiquidationThreshold */,
         uint ltv,
-        /* uint healthFactor */) = IPOOL(aaveV3_pool).getUserAccountData(address(hedger));
+        /* uint healthFactor */) = IPOOL(aaveV3_pool).getUserAccountData(address(leverage));
 
         console.log("UNISWAP V3 Liquidity");
         console.log(liquidity);
