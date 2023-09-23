@@ -85,18 +85,23 @@ contract UNIV3_IL_HEDGE is Test {
         uint ltv,
         /* uint healthFactor */) = IPOOL(aaveV3_pool).getUserAccountData(address(leverage));
 
-        console.log("UNISWAP V3 Liquidity");
+        console.log("**** UNISWAP V3 Liquidity Data ****");
         console.log(liquidity);
-        console.log("lower tick");
+        console.log("- Lower tick");
         console.logInt(_tickLower);
-        console.log("upper tick");
+        console.log("- Upper tick");
         console.logInt(_tickUpper);
 
+        console.log(" ");
 
-
-        console.log("AAVE SHORT Position Amount");
+        console.log("**** AAVE SHORT Position Data ***");
+        console.log(" - Borrowed WETH amount:");
+        console.log(IERC20(WETH).balanceOf(address(hedger)));
+        console.log(" - Total Collateral Base on Aave");
         console.log(totalCollateralBase);
+        console.log(" - Total Debt Base on Aave");
         console.log(totalDebtBase);
+        console.log(" - Loan to Value Ratio on Aave");
         console.log(ltv);
 
     

@@ -107,6 +107,7 @@ contract Leverage is Swapper {
             flashLoanAmount,
             false
         );
+
         positions[address(0)][msg.sender][ID] = position;
 
         flashloanParams memory flashParams = flashloanParams(
@@ -335,6 +336,7 @@ contract Leverage is Swapper {
             uint ltv,
             uint healthFactor
         ) = aaveV3.getUserAccountData(address(this));
+
 
         console.logUint(totalCollateralBase);
         console.logUint(totalDebtBase);
