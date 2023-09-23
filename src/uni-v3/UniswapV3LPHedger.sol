@@ -42,10 +42,10 @@ contract UniswapV3LPHedger is UniswapV3LiquidityProvider {
 
         // @dev todo: calculate the amount to supply as LP to uni, and to short
         (uint tokenId, uint128 liquidity, uint amount0, uint amount1) = mintNewPosition(token0, token1, 400e6, 0.2e18, tickLower, tickUpper); // filler vals`
-        leverage.short(token0, token1, 200e6, ud(2e18));
+        leverage.short(token0, token1, 200e6, ud(1.25e18));
 
+        // save user position
         IL_HEDGE memory data = IL_HEDGE(tokenId, liquidity, amount0, amount1, 200e6);
         userPositions[msg.sender] = data;
     }
-
 }
