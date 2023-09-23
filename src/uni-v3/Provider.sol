@@ -138,7 +138,7 @@ contract UniswapV3LiquidityProvider is IERC721Receiver {
     function decreaseLiquidityCurrentRange(
         uint tokenId,
         uint128 liquidity
-    ) external returns (uint amount0, uint amount1) {
+    ) public returns (uint amount0, uint amount1) {
         INonfungiblePositionManager.DecreaseLiquidityParams
             memory params = INonfungiblePositionManager.DecreaseLiquidityParams({
                 tokenId: tokenId,

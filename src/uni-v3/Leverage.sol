@@ -57,6 +57,10 @@ contract Leverage is Swapper {
     uint openFlashConstant = 1.005e18;
     uint closeFlashConstant = 1.009e16;
 
+    function getUserIDlength(address user) external returns (uint) {
+        return IDs[msg.sender].length;
+    }
+
     function updateFlashConstant(
         uint _openFlashConstant,
         uint _closeFlashConstant
@@ -210,7 +214,6 @@ contract Leverage is Swapper {
     /// @notice Close Position Function
     /// @param ID ID of position
     function closePosition(uint ID) external returns (bool) {
-        // @dev address(0) is currently a placeholder for pair address
         require(
             positions[address(0)][msg.sender][ID].baseAsset != address(0),
             "no position found"

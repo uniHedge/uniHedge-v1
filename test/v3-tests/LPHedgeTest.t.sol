@@ -61,7 +61,7 @@ contract UNIV3_IL_HEDGE is Test {
         // STEP #3 Call OpenHedgeLP Function
         hedger.openHedgedLP(USDC, WETH, 5000e18, 2e18, tickLower, tickUpper);
 
-        (uint tokenId, , , ,) = hedger.userPositions(address(this));
+        (uint tokenId, , , , , , ,) = hedger.userPositions(address(this));
 
         // Uniswap V3 LP position Data
         (/* uint96 nonce */,
