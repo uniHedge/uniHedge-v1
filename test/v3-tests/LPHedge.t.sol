@@ -39,8 +39,7 @@ contract UNIV3_IL_HEDGE is Test {
     }
 
     function testOpenLPHedge() public {
-        // STEP #1 Get USDC 
-        // getUSDC();
+        // STEP #1 Get USDC & WETH
         deal(USDC, address(this), type(uint).max);
         deal(WETH, address(this), type(uint).max);
 
@@ -51,6 +50,7 @@ contract UNIV3_IL_HEDGE is Test {
         int24 tickLower = 66000;
         int24 tickUpper = 75960;
 
+        // STEP #3 Call OpenHedgeLP Function
         hedger.openHedgedLP(USDC, WETH, 5000e18, 2e18, tickLower, tickUpper);
 
     }
