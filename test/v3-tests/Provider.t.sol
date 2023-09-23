@@ -136,9 +136,8 @@ contract UniswapV3LiquidityTest is Test {
         }
 
         console.log("TICK LOWER");
-
-        console.logInt(int(_tickUpper));
         console.logInt(int(_tickLower));
+        console.logInt(int(_tickUpper));
         
         (uint tokenId, 
         uint128 liquidityDelta,

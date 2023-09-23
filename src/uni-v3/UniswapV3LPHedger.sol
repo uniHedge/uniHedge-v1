@@ -21,21 +21,7 @@ contract UniswapV3LPHedger is UniswapV3LiquidityProvider, Leverage {
     }
 
 
-
-
     function openHedgedLP(address token0, address token1, int24 tickLower, int24 tickUpper) external {
-
-        uint priceLower = 800e18; // 800 usd
-        uint priceUpper = 2000e18; // 2000 usd
-
-        uint160 sqrtPriceX96Lower = priceToSqrtX96(priceLower);
-        uint160 sqrtPriceX96Upper = priceToSqrtX96(priceUpper);
-
-        int24 _tickLower = TickMath.getTickAtSqrtRatio(sqrtPriceX96Lower);
-        int24 _tickUpper = TickMath.getTickAtSqrtRatio(sqrtPriceX96Upper);
-
-        
-
 
         // @dev todo: calculate the amount to supply as LP to uni, and to short
         mintNewPosition(token0, token1, 1e18, 1e18, tickLower, tickUpper); // filler vals`

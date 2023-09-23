@@ -25,7 +25,7 @@ contract UniswapV3LiquidityProvider is IERC721Receiver {
         return IERC721Receiver.onERC721Received.selector;
     }
 
-    function priceToSqrtX96(uint price) public returns (uint160) {
+    function priceToSqrtX96(uint price) public pure returns (uint160) {
         uint160 sqrtPriceX96 = uint160(ud(price).sqrt().unwrap() * 2 ** 96);
         return sqrtPriceX96;
     }
