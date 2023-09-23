@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+
+
 interface IERC721Receiver {
     function onERC721Received(
         address operator,
@@ -74,7 +77,8 @@ interface INonfungiblePositionManager {
 }
 
 
-interface IWETH {
+
+interface IWETH is IERC20 {
     function deposit() external payable;
 
     function withdraw(uint amount) external;
