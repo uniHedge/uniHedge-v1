@@ -1,3 +1,4 @@
+pragma solidity ^0.8.19;
 
 interface IPOOL {
     function supply(

@@ -14,7 +14,7 @@ contract UniswapV3LPHedger is UniswapV3LiquidityProvider, Leverage {
 
     Leverage leverage;
 
-    constructor(address _leverage) {
+    constructor(address _leverage, address _pool) Leverage (_pool) {
         leverage = Leverage(_leverage);
     }
 
