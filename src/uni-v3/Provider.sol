@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-import "./interfaces/Interfaces.sol";
+import "./interfaces/interfaces.sol";
 import "forge-std/console.sol";
 
 import {UD60x18, ud, unwrap} from "@prb/math/UD60x18.sol";
