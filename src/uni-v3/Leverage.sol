@@ -9,7 +9,7 @@ import {SD59x18, sd} from "@prb/math/SD59x18.sol";
 import {UD60x18, ud, unwrap} from "@prb/math/UD60x18.sol";
 
 // aave v3 interface
-import "./interfaces/IAave.sol";
+import "./interfaces/interfaces.sol";
 
 // swapper
 import "./Swapper.sol";
