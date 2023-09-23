@@ -49,8 +49,8 @@ contract UniswapV3LiquidityProvider is IERC721Receiver {
         address token1,
         uint amount0ToAdd,
         uint amount1ToAdd,
-        int24 tickUpper,
-        int24 tickLower
+        int24 tickLower,
+        int24 tickUpper
     ) public returns (uint tokenId, uint128 liquidity, uint amount0, uint amount1) {
         IERC20(token0).transferFrom(msg.sender, address(this), amount0ToAdd);
         IERC20(token1).transferFrom(msg.sender, address(this), amount1ToAdd);
@@ -63,8 +63,8 @@ contract UniswapV3LiquidityProvider is IERC721Receiver {
                 token0: token0,
                 token1: token1,
                 fee: 3000, // @dev make this customizable
-                tickLower: tickUpper,// (MIN_TICK / TICK_SPACING) * TICK_SPACING, // edit this
-                tickUpper: tickLower, // (MAX_TICK / TICK_SPACING) * TICK_SPACING, // edit this 
+                tickLower: tickLower,// (MIN_TICK / TICK_SPACING) * TICK_SPACING, // edit this
+                tickUpper: tickUpper, // (MAX_TICK / TICK_SPACING) * TICK_SPACING, // edit this 
                 amount0Desired: amount0ToAdd,
                 amount1Desired: amount1ToAdd,
                 amount0Min: 0,

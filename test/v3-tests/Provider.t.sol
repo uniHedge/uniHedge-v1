@@ -131,16 +131,16 @@ contract UniswapV3LiquidityTest is Test {
 
         // sqrtPriceX96 = sqrt(price) * 2 ** 96
         console.log("sqrtx96");
-        console.log(ud(priceLower).sqrt().unwrap() * 2**96);
+        console.log(uint160(ud(1e18).div(ud(priceLower).sqrt()).unwrap() * 2**96));
 
-        uint160 sqrtPriceX96Lower = uint160(ud(priceLower).sqrt().unwrap() * 2**96);
-        uint160 sqrtPriceX96Upper = uint160(ud(priceLower).sqrt().unwrap() * 2**96);
+        uint160 sqrtPriceX96Lower = uint160(ud(1e18).div(ud(priceLower).sqrt()).unwrap() * 2**96);
+        uint160 sqrtPriceX96Upper = uint160(ud(1e18).div(ud(priceUpper).sqrt()).unwrap() * 2**96);
 
-        _tickLower = TickMath.getTickAtSqrtRatio(sqrtPriceX96Lower);
-        _tickUpper = TickMath.getTickAtSqrtRatio(sqrtPriceX96Upper);
+        // _tickLower = TickMath.getTickAtSqrtRatio(sqrtPriceX96Lower);
+        // _tickUpper = TickMath.getTickAtSqrtRatio(sqrtPriceX96Upper);
 
-        // _tickLower = -73735;
-        // _tickUpper = -61675;
+        _tickLower = -71704; // 1300
+        _tickUpper = -76965; // 2200
 
         }
 
