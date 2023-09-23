@@ -3,6 +3,7 @@ pragma solidity ^0.8.19;
 
 // openzeppelin
 import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 // prb-math v3
 import {SD59x18, sd} from "@prb/math/SD59x18.sol";

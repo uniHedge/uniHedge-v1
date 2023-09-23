@@ -4,6 +4,8 @@ pragma solidity ^0.8.19;
 import "./interfaces/Interfaces.sol";
 import "forge-std/console.sol";
 
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+
 contract UniswapV3Liquidity is IERC721Receiver {
 
     int24 private constant MIN_TICK = -887272;
