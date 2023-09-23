@@ -2,11 +2,11 @@
 pragma solidity ^0.8.19;
 
 import {Hooks} from "@uniswap/v4-core/contracts/libraries/Hooks.sol";
-import {BaseHook} from "v4-periphery/BaseHook.sol";
+import {BaseHook} from "@uniswap/v4-periphery/contracts/BaseHook.sol";
 
 import {IPoolManager} from "@uniswap/v4-core/contracts/interfaces/IPoolManager.sol";
 import {BalanceDelta} from "@uniswap/v4-core/contracts/types/BalanceDelta.sol";
-import {PoolId} from "@uniswap/v4-core/contracts/libraries/PoolId.sol";
+import {PoolId} from "@uniswap/v4-core/contracts/types/PoolId.sol";
 
 contract TestHook is BaseHook {
     using PoolId for IPoolManager.PoolKey;

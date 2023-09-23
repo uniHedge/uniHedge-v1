@@ -9,5 +9,5 @@ forge-std/=lib/forge-std/src/
 @uniswap/v3-core/=lib/v3-core/
 @uniswap/v3-periphery/=lib/v3-periphery/
 
-@v4-core/=lib/v4-core/contracts/
-v4-periphery/=lib/v4-periphery/contracts/
+@vuniswap/v4-core/=lib/v4-core/
+@uniswap/v4-periphery/=lib/periphery-next/
