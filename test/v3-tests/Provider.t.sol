@@ -108,38 +108,43 @@ contract UniswapV3LiquidityTest is Test {
         uint128 liquidity;
 
         // Mint new position
-        uint daiAmount = 1000 * 1e18;
+        uint daiAmount = 1 * 1e18;
         uint wethAmount = 10e18;
 
         int24 _tickLower;
         int24 _tickUpper;
 
         {
-            /* 
-            def price_to_tick(price):
-                tick = math.log(1 / price) / math.log(1.0001)
-                return int(tick)  # Assuming tick is always an integer
+        /* 
+        def price_to_tick(price):
+            tick = math.log(1 / price) / math.log(1.0001)
+            return int(tick)  # Assuming tick is always an integer
 
-            # Test the function with a known price
-            price = 1592
-            tick = price_to_tick(price)
-            print(tick)
-            */
-
+        # Test the function with a known price
+        price = 1592
+        tick = price_to_tick(price)
+        print(tick)
+        */
 
         uint priceLower = 800e18; // 800 usd
         uint priceUpper = 2000e18; // 2000 usd
 
-        // uint160 sqrtPriceX96Lower = uni.priceToSqrtX96(priceLower);
-        // uint160 sqrtPriceX96Upper = uni.priceToSqrtX96(priceUpper);
+        // sqrtPriceX96 = sqrt(price) * 2 ** 96
+        console.log("sqrtx96");
+        console.log(ud(priceLower).sqrt().unwrap() * 2**96);
 
-        _tickLower = -73735;
-        _tickUpper = -61675;
+        uint160 sqrtPriceX96Lower = uint160(ud(priceLower).sqrt().unwrap() * 2**96);
+        uint160 sqrtPriceX96Upper = uint160(ud(priceLower).sqrt().unwrap() * 2**96);
 
+        _tickLower = TickMath.getTickAtSqrtRatio(sqrtPriceX96Lower);
+        _tickUpper = TickMath.getTickAtSqrtRatio(sqrtPriceX96Upper);
+
+        // _tickLower = -73735;
+        // _tickUpper = -61675;
 
         }
 
-        console.log("TICK LOWER");
+        console.log("TICKS");
         console.logInt(int(_tickLower));
         console.logInt(int(_tickUpper));
         
