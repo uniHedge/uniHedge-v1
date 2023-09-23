@@ -139,8 +139,8 @@ contract UniswapV3LiquidityTest is Test {
         // _tickLower = TickMath.getTickAtSqrtRatio(sqrtPriceX96Lower);
         // _tickUpper = TickMath.getTickAtSqrtRatio(sqrtPriceX96Upper);
 
-        _tickLower = -71704; // 1300
-        _tickUpper = -76965; // 2200
+        _tickLower = -73735; 
+        _tickUpper = -73735; 
 
         }
 
