@@ -6,10 +6,12 @@ import {BaseHook} from "@uniswap/v4-periphery/contracts/BaseHook.sol";
 
 import {IPoolManager} from "@uniswap/v4-core/contracts/interfaces/IPoolManager.sol";
 import {BalanceDelta} from "@uniswap/v4-core/contracts/types/BalanceDelta.sol";
-import {PoolId} from "@uniswap/v4-core/contracts/types/PoolId.sol";
+import {PoolId, PoolIdLibrary} from "@uniswap/v4-core/contracts/types/PoolId.sol";
+import {PoolKey} from "@uniswap/v4-core/contracts/types/PoolKey.sol";
+
 
 contract TestHook is BaseHook {
-    using PoolId for IPoolManager.PoolKey;
+    using PoolIdLibrary for PoolKey;
     uint256 public swapCount;
 
     constructor(IPoolManager _poolManager) BaseHook(_poolManager) {}
@@ -29,17 +31,16 @@ contract TestHook is BaseHook {
 
     function afterSwap(
         address,
-        IPoolManager.PoolKey memory key,
+        PoolKey memory key,
         IPoolManager.SwapParams calldata params,
         BalanceDelta
     )
         external
-        override
         returns (bytes4)
     {
         swapCount++;
-        bytes32 poolId = key.toId();
-        (uint160 sqrtPriceX96, int24 tick, , , ,
+        PoolId poolId = key.toId();
+        (uint160 sqrtPriceX96, int24 tick, ,
             // uint8 protocolSwapFee,
             // uint8 protocolWithdrawFee,
             // uint8 hookSwapFee,
