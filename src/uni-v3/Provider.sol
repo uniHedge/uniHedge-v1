@@ -6,7 +6,7 @@ import "forge-std/console.sol";
 
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
-contract UniswapV3Liquidity is IERC721Receiver {
+contract UniswapV3LiquidityProvider is IERC721Receiver {
 
     int24 private constant MIN_TICK = -887272;
     int24 private constant MAX_TICK = -MIN_TICK;

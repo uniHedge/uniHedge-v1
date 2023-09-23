@@ -80,5 +80,4 @@ contract shortTest is Test {
         console.log("balance WETH");
         console.log(IERC20(WETH).balanceOf(address(this)));
     }
-
 }

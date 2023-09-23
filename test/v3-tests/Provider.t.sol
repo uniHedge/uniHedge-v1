@@ -18,12 +18,12 @@ contract UniswapV3LiquidityTest is Test {
 
     // address private constant DAI_WHALE = 0xe81D6f03028107A20DBc83176DA82aE8099E9C42;
 
-    UniswapV3Liquidity uni;
+    UniswapV3LiquidityProvider uni;
 
     function setUp() public {
         ethFork = vm.createSelectFork(ETH_RPC);
 
-        uni = new UniswapV3Liquidity();
+        uni = new UniswapV3LiquidityProvider();
 
         deal(DAI, address(this), 1e18 * 1e6);
         deal(WETH, address(this), 1e18 * 1e6);
