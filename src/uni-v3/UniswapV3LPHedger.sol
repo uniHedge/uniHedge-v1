@@ -23,6 +23,8 @@ contract UniswapV3LPHedger is UniswapV3LiquidityProvider, Leverage {
         IERC20(token0).safeTransferFrom(msg.sender, address(this), amountToken0);
         IERC20(token1).safeTransferFrom(msg.sender, address(this), amountToken1);
 
+        
+
         // @dev todo: calculate the amount to supply as LP to uni, and to short
         mintNewPosition(token0, token1, 1e18, 1e18, tickLower, tickUpper); // filler vals`
         // short(token0, token1, 1e18, ud(1e18));

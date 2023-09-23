@@ -17,7 +17,7 @@ contract shortTest is Test {
     string ETH_RPC = vm.envString("ETH_RPC");
 
     address WETH = vm.envAddress("WETH_ETH");
-    address DAI = vm.envAddress("DAI_ETH");
+    address USDC = vm.envAddress("USDC_ETH");
 
     UniswapV3LPHedger hedger;
     Factory factory;
@@ -48,17 +48,17 @@ contract shortTest is Test {
     function testOpenLPHedge() public {
         // STEP #1 Get USDC 
         // getUSDC();
-        deal(DAI, address(this), type(uint).max);
+        deal(USDC, address(this), type(uint).max);
         deal(WETH, address(this), type(uint).max);
 
         // STEP #2 Approve leverage
-        IERC20(DAI).approve(address(hedger), type(uint).max);
+        IERC20(USDC).approve(address(hedger), type(uint).max);
         IERC20(WETH).approve(address(hedger), type(uint).max);
 
         int24 tickLower = 66000;
         int24 tickUpper = 75960;
 
-        hedger.openHedgedLP(DAI, WETH, 5000e18, 1e18, tickLower, tickUpper);
+        hedger.openHedgedLP(USDC, WETH, 5000e18, 1e18, tickLower, tickUpper);
 
     }
 
