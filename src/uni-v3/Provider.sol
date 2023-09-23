@@ -29,7 +29,7 @@ contract UniswapV3LiquidityProvider is IERC721Receiver {
         address token1,
         uint amount0ToAdd,
         uint amount1ToAdd
-    ) external returns (uint tokenId, uint128 liquidity, uint amount0, uint amount1) {
+    ) public returns (uint tokenId, uint128 liquidity, uint amount0, uint amount1) {
         IERC20(token0).transferFrom(msg.sender, address(this), amount0ToAdd);
         IERC20(token1).transferFrom(msg.sender, address(this), amount1ToAdd);
 
