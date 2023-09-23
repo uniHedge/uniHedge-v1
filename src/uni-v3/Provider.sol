@@ -43,6 +43,8 @@ contract UniswapV3LiquidityProvider is IERC721Receiver {
         }
     }
 
+    // function getCurrentTick
+
 
     function mintNewPosition(
         address token0,

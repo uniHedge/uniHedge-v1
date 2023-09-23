@@ -108,24 +108,13 @@ contract UniswapV3LiquidityTest is Test {
         uint128 liquidity;
 
         // Mint new position
-        uint daiAmount = 1 * 1e18;
-        uint wethAmount = 10e18;
+        uint daiAmount = 400 * 1e18;
+        uint wethAmount = 50e18;
 
         int24 _tickLower;
         int24 _tickUpper;
 
         {
-        /* 
-        def price_to_tick(price):
-            tick = math.log(1 / price) / math.log(1.0001)
-            return int(tick)  # Assuming tick is always an integer
-
-        # Test the function with a known price
-        price = 1592
-        tick = price_to_tick(price)
-        print(tick)
-        */
-
         uint priceLower = 800e18; // 800 usd
         uint priceUpper = 2000e18; // 2000 usd
 
@@ -139,8 +128,8 @@ contract UniswapV3LiquidityTest is Test {
         // _tickLower = TickMath.getTickAtSqrtRatio(sqrtPriceX96Lower);
         // _tickUpper = TickMath.getTickAtSqrtRatio(sqrtPriceX96Upper);
 
-        _tickLower = -73735; 
-        _tickUpper = -73735; 
+        _tickLower = -73735 - 60; // 800
+        _tickUpper = _tickLower + 60; // 2000
 
         }
 
