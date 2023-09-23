@@ -29,12 +29,13 @@ contract shortTest is Test {
         ethFork = vm.createSelectFork(ETH_RPC);
 
         // deploy factory
-        // factory = new Factory(aaveV3_pool);
+        factory = new Factory(aaveV3_pool);
 
         // deploy leverage
-        // leverage = Leverage(factory.createLeverageContract());
+        leverage = Leverage(factory.createLeverageContract());
 
-        hedger = new UniswapV3LPHedger(aaveV3_pool);
+        // deploy hedger
+        hedger = new UniswapV3LPHedger(address(leverage));
     }
 
 /*     function getDAI() internal {
@@ -58,7 +59,7 @@ contract shortTest is Test {
         int24 tickLower = 66000;
         int24 tickUpper = 75960;
 
-        hedger.openHedgedLP(USDC, WETH, 5000e18, 1e18, tickLower, tickUpper);
+        hedger.openHedgedLP(USDC, WETH, 5000e18, 2e18, tickLower, tickUpper);
 
     }
 

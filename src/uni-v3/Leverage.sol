@@ -78,7 +78,6 @@ contract Leverage is Swapper {
         return IDs[user].length;
     }
 
-
     /// @notice Initate short function
     /// @param baseAsset address stable asset
     /// @param leveragedAsset address leveraged asset
