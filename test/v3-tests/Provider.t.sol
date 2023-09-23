@@ -7,6 +7,7 @@ import "forge-std/console.sol";
 import "../../src/uni-v3/Provider.sol";
 
 import {TickMath} from "@uniswap/v3-core/contracts/libraries/TickMath.sol";
+import {UD60x18, ud, unwrap} from "@prb/math/UD60x18.sol";
 
 contract UniswapV3LiquidityTest is Test {
     int24 private constant MIN_TICK = -887272;
@@ -114,22 +115,28 @@ contract UniswapV3LiquidityTest is Test {
         int24 _tickUpper;
 
         {
+            /* 
+            def price_to_tick(price):
+                tick = math.log(1 / price) / math.log(1.0001)
+                return int(tick)  # Assuming tick is always an integer
+
+            # Test the function with a known price
+            price = 1592
+            tick = price_to_tick(price)
+            print(tick)
+            */
+
+
         uint priceLower = 800e18; // 800 usd
         uint priceUpper = 2000e18; // 2000 usd
-
-        // uint160 sqrtPriceX96Lower = uint160(priceLower) ** 2
-        console.log("HERE");
-        console.log(ud(priceLower).sqrt().unwrap());
-        uint160 sqrtPriceX96Lower = uint160(ud(priceLower).sqrt().unwrap() * 2**96);
-        console.log(sqrtPriceX96Lower);
 
         // uint160 sqrtPriceX96Lower = uni.priceToSqrtX96(priceLower);
         // uint160 sqrtPriceX96Upper = uni.priceToSqrtX96(priceUpper);
 
-        int24 _tickLower = TickMath.getTickAtSqrtRatio(sqrtPriceX96Lower);
-        // int24 rawTickUpper = TickMath.getTickAtSqrtRatio(sqrtPriceX96Upper);
+        _tickLower = -73735;
+        _tickUpper = -61675;
 
-        // _tickLower = rawTickLower;
+
         }
 
         console.log("TICK LOWER");
