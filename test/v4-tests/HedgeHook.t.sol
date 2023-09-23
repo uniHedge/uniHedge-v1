@@ -39,7 +39,6 @@ contract HookTest is Test, Deployers, GasSnapshot {
     PoolId poolId;
 
     function setUp() public {
-
         console.log("HERE");
 
         token0 = new TestERC20(2**128);
@@ -138,8 +137,6 @@ contract HookTest is Test, Deployers, GasSnapshot {
 
     function testHooks() public {
         assertEq(testHook.swapCount(), 0);
-        
-
 
         // Perform a test swap //
         IPoolManager.SwapParams memory params =
