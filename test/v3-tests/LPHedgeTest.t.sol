@@ -61,25 +61,47 @@ contract UNIV3_IL_HEDGE is Test {
         // STEP #3 Call OpenHedgeLP Function
         hedger.openHedgedLP(USDC, WETH, 5000e18, 2e18, tickLower, tickUpper);
 
-        uint tokenId = hedger.userPositions(address(this)).tokenId;
+        (uint tokenId, , , ,) = hedger.userPositions(address(this));
 
-        // leverage.viewAccountData();
-        INonfungiblePositionManager(_nonfungiblePositionManager).positions(tokenId);
-
-
-        (
-            uint totalCollateralBase,
-            uint totalDebtBase,
-            uint availableBorrowBase,
-            uint currentLiquidationThreshold,
-            uint ltv,
-            uint healthFactor
-        ) = IPOOL(aaveV3_pool).getUserAccountData(address(this));
-
-
+        // Uniswap V3 LP position Data
+        (/* uint96 nonce */,
+        /* address operator  */,
+        /* address token0 */,
+        /* address token1 */ ,
+        /* uint24 fee */,
+        int24 _tickLower, 
+        int24 _tickUpper, 
+        uint128 liquidity, 
+        /* uint256 feeGrowthInside0LastX128 */,
+        /* uint256 feeGrowthInside1LastX128 */,
+        /* uint128 tokensOwed0 */, 
+        /* uint128 tokensOwed1 */) = INonfungiblePositionManager(_nonfungiblePositionManager).positions(tokenId);
         
+        // Aave Short Position Data
+        (uint totalCollateralBase,
+        uint totalDebtBase,
+        /* uint availableBorrowBase */,
+        /* uint currentLiquidationThreshold */,
+        uint ltv,
+        /* uint healthFactor */) = IPOOL(aaveV3_pool).getUserAccountData(address(this));
 
-        // console.log()
+        console.log("UNISWAP V3 Liquidity");
+        console.log(liquidity);
+        console.log("lower tick");
+        console.logInt(_tickLower);
+        console.log("upper tick");
+        console.logInt(_tickUpper);
+
+
+
+        console.log("AAVE SHORT Position Amount");
+        console.log(totalCollateralBase);
+        console.log(totalDebtBase);
+        console.log(ltv);
+
+    
+
+
     }
 
 }
