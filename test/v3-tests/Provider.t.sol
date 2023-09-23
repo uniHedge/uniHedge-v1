@@ -9,7 +9,7 @@ import "../../src/uni-v3/Provider.sol";
 import {TickMath} from "@uniswap/v3-core/contracts/libraries/TickMath.sol";
 import {UD60x18, ud, unwrap} from "@prb/math/UD60x18.sol";
 
-contract UniswapV3LiquidityTest is Test {
+contract UNIV3_LiquiditySupply is Test {
     int24 private constant MIN_TICK = -887272;
     int24 private constant MAX_TICK = -MIN_TICK;
     int24 private constant TICK_SPACING = 60;

@@ -12,7 +12,7 @@ import { UD60x18, ud, unwrap } from "@prb/math/UD60x18.sol";
 import "src/uni-v3/UniswapV3LPHedger.sol";
 import "src/uni-v3/Factory.sol";
 
-contract shortTest is Test {
+contract UNIV3_IL_HEDGE is Test {
     uint ethFork;
     string ETH_RPC = vm.envString("ETH_RPC");
 
@@ -37,14 +37,6 @@ contract shortTest is Test {
         // deploy hedger
         hedger = new UniswapV3LPHedger(address(leverage));
     }
-
-/*     function getDAI() internal {
-        IERC20 dai = IERC20(DAI);
-        vm.prank(user);
-        dai.approve(address(this), balance);
-        vm.prank(user);
-        // usdc.transfer(address(this), 2000e6);
-    } */
 
     function testOpenLPHedge() public {
         // STEP #1 Get USDC 
