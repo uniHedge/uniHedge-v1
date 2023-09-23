@@ -58,7 +58,11 @@ contract UniswapV3LiquidityTest is Test {
             wethAmount, 
             (MIN_TICK / TICK_SPACING) * TICK_SPACING,
             (MAX_TICK / TICK_SPACING) * TICK_SPACING);
-        
+
+        console.log("TICKS");
+        console.logInt((MIN_TICK / TICK_SPACING) * TICK_SPACING);
+        console.logInt((MAX_TICK / TICK_SPACING) * TICK_SPACING);
+ 
         console.log("in test 2");
         
         liquidity += liquidityDelta;
@@ -120,7 +124,7 @@ contract UniswapV3LiquidityTest is Test {
         int24 rawTickLower = TickMath.getTickAtSqrtRatio(sqrtPriceX96Lower);
         int24 rawTickUpper = TickMath.getTickAtSqrtRatio(sqrtPriceX96Upper);
 
-        _tickLower = uni.roundToNearestTick(rawTickLower);
+        _tickLower = -uni.roundToNearestTick(rawTickLower);
         _tickUpper = uni.roundToNearestTick(rawTickUpper);
         }
 
