@@ -4,7 +4,7 @@ pragma solidity ^0.8.19;
 import "forge-std/Test.sol";
 import "forge-std/console.sol";
 
-import "../src/Provider.sol";
+import "../../src/uni-v3/Provider.sol";
 
 contract UniswapV3LiquidityTest is Test {
     uint ethFork;
