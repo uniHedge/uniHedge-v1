@@ -47,8 +47,8 @@ contract UNIV3_IL_HEDGE is Test {
         IERC20(USDC).approve(address(hedger), type(uint).max);
         IERC20(WETH).approve(address(hedger), type(uint).max);
 
-        int24 tickLower = 66000;
-        int24 tickUpper = 75960;
+        int24 tickLower = 69060; // ~1000 USDC/ETH
+        int24 tickUpper = 74940; // ~1800 USDC/ETH_RPC
 
         // STEP #3 Call OpenHedgeLP Function
         hedger.openHedgedLP(USDC, WETH, 5000e18, 2e18, tickLower, tickUpper);
