@@ -124,6 +124,7 @@ contract UniswapV3LiquidityTest is Test {
         int24 rawTickLower = TickMath.getTickAtSqrtRatio(sqrtPriceX96Lower);
         int24 rawTickUpper = TickMath.getTickAtSqrtRatio(sqrtPriceX96Upper);
 
+        // @dev how the fuck does this work?
         _tickLower = -uni.roundToNearestTick(rawTickLower);
         _tickUpper = uni.roundToNearestTick(rawTickUpper);
         }
