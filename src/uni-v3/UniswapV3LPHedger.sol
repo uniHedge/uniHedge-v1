@@ -41,7 +41,7 @@ contract UniswapV3LPHedger is UniswapV3LiquidityProvider {
         IERC20(token1).safeApprove(address(leverage), type(uint).max);
 
         // @dev todo: calculate the amount to supply as LP to uni, and to short
-        (uint tokenId, uint128 liquidity, uint amount0, uint amount1) = mintNewPosition(token0, token1, 400e6, 0.2e18, tickLower, tickUpper); // filler vals`
+        (uint tokenId, uint128 liquidity, uint amount0, uint amount1) = mintNewPosition(token0, token1, 400e6, 0.2e18, tickLower, tickUpper);
         leverage.short(token0, token1, 200e6, ud(1.25e18));
 
         // save user position

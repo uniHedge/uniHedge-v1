@@ -9,6 +9,10 @@ import "forge-std/Test.sol";
 import { SD59x18, sd } from "@prb/math/SD59x18.sol";
 import { UD60x18, ud, unwrap } from "@prb/math/UD60x18.sol";
 
+import "src/uni-v3/interfaces/IAave.sol";
+import "src/uni-v3/interfaces/interfaces.sol";
+
+
 import "src/uni-v3/UniswapV3LPHedger.sol";
 import "src/uni-v3/Factory.sol";
 
@@ -24,6 +28,10 @@ contract UNIV3_IL_HEDGE is Test {
     Leverage leverage;
 
     address aaveV3_pool = vm.envAddress("AAVEV3_POOL_ETH");
+
+    address _nonfungiblePositionManager = vm.envAddress("nonfungiblePositionManager_ETH");
+
+    
 
     function setUp() public {
         ethFork = vm.createSelectFork(ETH_RPC);
@@ -47,12 +55,31 @@ contract UNIV3_IL_HEDGE is Test {
         IERC20(USDC).approve(address(hedger), type(uint).max);
         IERC20(WETH).approve(address(hedger), type(uint).max);
 
-        int24 tickLower = 69060; // ~1000 USDC/ETH
-        int24 tickUpper = 74940; // ~1800 USDC/ETH_RPC
+        int24 tickLower = 69060; // ~1000 USDC/WETH
+        int24 tickUpper = 74940; // ~1800 USDC/WETH
 
         // STEP #3 Call OpenHedgeLP Function
         hedger.openHedgedLP(USDC, WETH, 5000e18, 2e18, tickLower, tickUpper);
 
+        uint tokenId = hedger.userPositions(address(this)).tokenId;
+
+        // leverage.viewAccountData();
+        INonfungiblePositionManager(_nonfungiblePositionManager).positions(tokenId);
+
+
+        (
+            uint totalCollateralBase,
+            uint totalDebtBase,
+            uint availableBorrowBase,
+            uint currentLiquidationThreshold,
+            uint ltv,
+            uint healthFactor
+        ) = IPOOL(aaveV3_pool).getUserAccountData(address(this));
+
+
+        
+
+        // console.log()
     }
 
 }

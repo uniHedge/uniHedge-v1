@@ -89,7 +89,6 @@ contract Leverage is Swapper {
         uint amountBase,
         UD60x18 leverage
     ) public returns (bool) {
-
         IERC20(baseAsset).transferFrom(msg.sender, address(this), amountBase);
 
         uint flashLoanAmount = unwrap(
@@ -302,11 +301,6 @@ contract Leverage is Swapper {
                 executeCloseShort(params, amounts[0], amounts[0] + premiums[0]);
             }
         }
-
-        console.log("END OF EXECUTE OPERATION");
-        console.log("FL DEBT AMOUNT");
-        console.log(amounts[0] + premiums[0]);
-        console.log(IERC20(assets[0]).balanceOf(address(this)));
 
         // repay flashloan to Aave
         IERC20(assets[0]).approve(address(aaveV3), amounts[0] + premiums[0]);
