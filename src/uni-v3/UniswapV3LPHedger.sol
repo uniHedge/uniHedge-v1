@@ -15,11 +15,7 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 contract UniswapV3LPHedger is UniswapV3LiquidityProvider, Leverage {
     using SafeERC20 for IERC20;
 
-    // Leverage leverage;
-
-    constructor(address _leverage, address _pool) Leverage (_pool) {
-        // leverage = Leverage(_leverage);
-    }
+    constructor(address _pool) Leverage (_pool) {}
 
 
     function openHedgedLP(address token0, address token1, uint amountToken0, uint amountToken1, int24 tickLower, int24 tickUpper) external {
@@ -29,8 +25,7 @@ contract UniswapV3LPHedger is UniswapV3LiquidityProvider, Leverage {
 
         // @dev todo: calculate the amount to supply as LP to uni, and to short
         mintNewPosition(token0, token1, 1e18, 1e18, tickLower, tickUpper); // filler vals`
-
-        short(token0, token1, 1e18, ud(1e18));
+        // short(token0, token1, 1e18, ud(1e18));
     }
 
 }

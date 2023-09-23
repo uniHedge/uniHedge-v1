@@ -17,7 +17,7 @@ contract shortTest is Test {
     string ETH_RPC = vm.envString("ETH_RPC");
 
     address WETH = vm.envAddress("WETH_ETH");
-    address USDC = vm.envAddress("USDC_ETH");
+    address DAI = vm.envAddress("DAI_ETH");
 
     UniswapV3LPHedger hedger;
     Factory factory;
@@ -29,33 +29,36 @@ contract shortTest is Test {
         ethFork = vm.createSelectFork(ETH_RPC);
 
         // deploy factory
-        factory = new Factory(aaveV3_pool);
+        // factory = new Factory(aaveV3_pool);
 
         // deploy leverage
-        leverage = Leverage(factory.createLeverageContract());
+        // leverage = Leverage(factory.createLeverageContract());
 
-        // hedger = new 
+        hedger = new UniswapV3LPHedger(aaveV3_pool);
     }
 
-    function getUSDC() internal {
-        IERC20 usdc = IERC20(USDC);
-        address user = 0x7713974908Be4BEd47172370115e8b1219F4A5f0;
-        uint balance = usdc.balanceOf(user);
-        assert(balance > 0);
+/*     function getDAI() internal {
+        IERC20 dai = IERC20(DAI);
         vm.prank(user);
-        usdc.approve(address(this), balance);
+        dai.approve(address(this), balance);
         vm.prank(user);
-        usdc.transfer(address(this), 2000e6);
-    }
+        // usdc.transfer(address(this), 2000e6);
+    } */
 
-    function testOpenShort() public {
+    function testOpenLPHedge() public {
         // STEP #1 Get USDC 
-        getUSDC();
+        // getUSDC();
+        deal(DAI, address(this), type(uint).max);
+        deal(WETH, address(this), type(uint).max);
 
         // STEP #2 Approve leverage
-        // IERC20(USDC).approve(address(leverage), type(uint).max);
+        IERC20(DAI).approve(address(hedger), type(uint).max);
+        IERC20(WETH).approve(address(hedger), type(uint).max);
 
+        int24 tickLower = 66000;
+        int24 tickUpper = 75960;
 
+        hedger.openHedgedLP(DAI, WETH, 5000e18, 1e18, tickLower, tickUpper);
 
     }
 
