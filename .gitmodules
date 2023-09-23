@@ -18,9 +18,6 @@
 	path = lib/v3-periphery
 	url = https://github.com/Uniswap/v3-periphery
 	branch = 0.8
-[submodule "lib/v4-core"]
-	path = lib/v4-core
-	url = https://github.com/Uniswap/v4-core
 [submodule "lib/periphery-next"]
 	path = lib/periphery-next
 	url = https://github.com/Uniswap/periphery-next
