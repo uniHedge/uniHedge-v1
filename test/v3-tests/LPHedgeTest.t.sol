@@ -31,8 +31,6 @@ contract UNIV3_IL_HEDGE is Test {
 
     address _nonfungiblePositionManager = vm.envAddress("nonfungiblePositionManager_ETH");
 
-    
-
     function setUp() public {
         ethFork = vm.createSelectFork(ETH_RPC);
 
@@ -59,7 +57,7 @@ contract UNIV3_IL_HEDGE is Test {
         int24 tickUpper = 78240; // ~2500 USDC/WETH
 
         // STEP #3 Call OpenHedgeLP Function
-        hedger.openHedgedLP(USDC, WETH, 5000e6, 2e18, tickLower, tickUpper);
+        hedger.openHedgedLP(USDC, WETH, 10000e6, 5e18, tickLower, tickUpper);
 
         (uint tokenId, , , , , , ,) = hedger.userPositions(address(this));
 
@@ -118,7 +116,7 @@ contract UNIV3_IL_HEDGE is Test {
         int24 tickUpper = 74940; // ~1800 USDC/WETH
 
         // STEP #3 Call OpenHedgeLP Function
-        hedger.openHedgedLP(USDC, WETH, 5000e6, 2e18, tickLower, tickUpper);
+        hedger.openHedgedLP(USDC, WETH, 10000e6, 5e18, tickLower, tickUpper);
 
         (uint tokenId, , , , , , ,) = hedger.userPositions(address(this));
 

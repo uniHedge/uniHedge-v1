@@ -45,9 +45,7 @@ contract UniswapV3LPHedger is UniswapV3LiquidityProvider {
         IERC20(token1).safeApprove(address(leverage), type(uint).max);
 
         uint price = leverage.getPrice(token1, token0) * 1e12;  // hardcode usdc => weth
-
         uint portfolioValue = (price * amountToken1 / 1e18) + amountToken0 * 1e12;
-
 
         {
         uint160 p = TickMath.getSqrtRatioAtTick(73655);
@@ -71,13 +69,14 @@ contract UniswapV3LPHedger is UniswapV3LiquidityProvider {
         console.log("LP");
         console.log(LP_value);
         console.log(SHORT_value);
-
         }
 
         // @dev todo: calculate the amount to supply as LP to uni, and to short
-        (uint tokenId, uint128 liquidity, uint amount0, uint amount1) = mintNewPosition(token0, token1, 400e6, 0.2e18, tickLower, tickUpper);
-        
-        leverage.short(token0, token1, 200e6, ud(1.25e18));
+        // (uint tokenId, uint128 liquidity, uint amount0, uint amount1) = mintNewPosition(token0, token1, x, y, tickLower, tickUpper);
+        // leverage.short(token0, token1, z, ud(1.25e18));
+
+        (uint tokenId, uint128 liquidity, uint amount0, uint amount1) = mintNewPosition(token0, token1, 6000e6, 4e18, tickLower, tickUpper);
+        leverage.short(token0, token1, 3700e6, ud(1.25e18));
 
         uint leverageId = leverage.getUserIDlength(msg.sender);
 
