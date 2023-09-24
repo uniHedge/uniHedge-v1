@@ -52,23 +52,23 @@ contract UniswapV3LPHedger is UniswapV3LiquidityProvider {
         uint160 a = TickMath.getSqrtRatioAtTick(tickLower);
         uint160 b = TickMath.getSqrtRatioAtTick(tickUpper);
         
-        console.log("PRICE");
+/*         console.log("PRICE");
         console.log(p);
         console.log(a);
-        console.log(b);
+        console.log(b); */
 
         uint LP_value = ud(portfolioValue).mul(ud(0.79e18)).unwrap(); 
         uint SHORT_value = (portfolioValue - LP_value) / 1e12; // in base 1e6 i.e. usdc
 
         (uint x, uint y) = get_liquidity_xy(p, a, b, LP_value);
 
-        console.log("xy");
+/*         console.log("xy");
         console.log(x);
         console.log(y);
 
         console.log("LP");
         console.log(LP_value);
-        console.log(SHORT_value);
+        console.log(SHORT_value); */
         }
 
         // @dev todo: calculate the amount to supply as LP to uni, and to short
