@@ -1,6 +1,6 @@
-## UniHedge 
+## UniHedge - Hedge IL on Uniswap V3 & V4
 
-
+UniHedge Uniswap V4 hook: https://github.com/uniHedge/uniHedge-V4-hook
 
 ### Build
 
