@@ -44,9 +44,13 @@ contract UniswapV3LPHedger is UniswapV3LiquidityProvider {
         IERC20(token0).safeApprove(address(leverage), type(uint).max);
         IERC20(token1).safeApprove(address(leverage), type(uint).max);
 
-        uint price = leverage.getPrice(token0, token1);
+        uint price = leverage.getPrice(token1, token0) * 1e12;  // hardcode usdc => weth
 
-        uint portfolioValue = (ud(price).mul(ud(amountToken0)) + ud(amountToken1*1e12)).unwrap();
+        console.log(price);
+        console.log(amountToken0);
+        console.log(amountToken1);
+
+        uint portfolioValue = (price * amountToken1 / 1e18) + amountToken0 * 1e12;
         console.log("PORTFOLIO VALUE");
         console.log(portfolioValue);
 
