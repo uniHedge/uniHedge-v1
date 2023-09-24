@@ -44,6 +44,12 @@ contract UniswapV3LPHedger is UniswapV3LiquidityProvider {
         IERC20(token0).safeApprove(address(leverage), type(uint).max);
         IERC20(token1).safeApprove(address(leverage), type(uint).max);
 
+        uint price = leverage.getPrice(token0, token1);
+
+        uint portfolioValue = (ud(price).mul(ud(amountToken0)) + ud(amountToken1*1e12)).unwrap();
+        console.log("PORTFOLIO VALUE");
+        console.log(portfolioValue);
+
         // @dev todo: calculate the amount to supply as LP to uni, and to short
         (uint tokenId, uint128 liquidity, uint amount0, uint amount1) = mintNewPosition(token0, token1, 400e6, 0.2e18, tickLower, tickUpper);
         
@@ -56,14 +62,14 @@ contract UniswapV3LPHedger is UniswapV3LiquidityProvider {
         userPositions[msg.sender] = data;
     }
 
-
-    function closeHedgedLP(uint positionId) external {
+    // @dev currently for the sake of simplicity for the hackathon atm users can only open 1 hedged LP position at a time
+    // this will be solved with a simple mapping of address user => array of IDs of positions
+    function closeHedgedLP() external {
         userPositions[msg.sender].amount0 = 0;
         userPositions[msg.sender].amount1 = 0;
 
         (uint amount0, uint amount1) = decreaseLiquidityCurrentRange(userPositions[msg.sender].tokenId, userPositions[msg.sender].liquidity);
         
-        uint tokenId = userPositions[msg.sender].tokenId;
         uint leverageId = userPositions[msg.sender].leverageId;
 
         address token0 = userPositions[msg.sender].token0;
@@ -77,8 +83,7 @@ contract UniswapV3LPHedger is UniswapV3LiquidityProvider {
         uint bal0_t1 = IERC20(token0).balanceOf(address(this));
         uint bal1_t1 = IERC20(token0).balanceOf(address(this));
 
-        IERC20(token0).safeTransfer(msg.sender, bal0_t1 - bal0_t1 + amount0);
-        IERC20(token1).safeTransfer(msg.sender, bal1_t1 - bal1_t1 + amount1);
+        IERC20(token0).safeTransfer(msg.sender, bal0_t1 - bal0_t0 + amount0);
+        IERC20(token1).safeTransfer(msg.sender, bal1_t1 - bal1_t0 + amount1);
     }
-
 }

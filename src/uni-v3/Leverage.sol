@@ -58,7 +58,7 @@ contract Leverage is Swapper {
     uint closeFlashConstant = 1.009e16;
 
     function getUserIDlength(address user) external view returns (uint) {
-        return IDs[msg.sender].length;
+        return IDs[user].length;
     }
 
     function updateFlashConstant(
