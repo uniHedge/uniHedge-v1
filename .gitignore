@@ -12,6 +12,8 @@ docs/
 
 # Vim
 .swp
+.swo
+
 
 # Dotenv file
 .env
