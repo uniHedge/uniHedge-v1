@@ -48,27 +48,27 @@ contract UniswapV3LPHedger is UniswapV3LiquidityProvider {
         uint portfolioValue = (price * amountToken1 / 1e18) + amountToken0 * 1e12;
 
         {
-        uint160 p = TickMath.getSqrtRatioAtTick(73655);
-        uint160 a = TickMath.getSqrtRatioAtTick(tickLower);
-        uint160 b = TickMath.getSqrtRatioAtTick(tickUpper);
-        
-/*         console.log("PRICE");
-        console.log(p);
-        console.log(a);
-        console.log(b); */
+            uint160 p = TickMath.getSqrtRatioAtTick(73655);
+            uint160 a = TickMath.getSqrtRatioAtTick(tickLower);
+            uint160 b = TickMath.getSqrtRatioAtTick(tickUpper);
 
-        uint LP_value = ud(portfolioValue).mul(ud(0.79e18)).unwrap(); 
-        uint SHORT_value = (portfolioValue - LP_value) / 1e12; // in base 1e6 i.e. usdc
+            console.log("PRICE");
+            console.log(p);
+            console.log(a);
+            console.log(b);
 
-        (uint x, uint y) = get_liquidity_xy(p, a, b, LP_value);
+            uint LP_value = ud(portfolioValue).mul(ud(0.79e18)).unwrap(); 
+            uint SHORT_value = (portfolioValue - LP_value) / 1e12; // in base 1e6 i.e. usdc
 
-/*         console.log("xy");
-        console.log(x);
-        console.log(y);
+            (uint x, uint y) = get_liquidity_xy(p, a, b, LP_value);
 
-        console.log("LP");
-        console.log(LP_value);
-        console.log(SHORT_value); */
+            console.log("xy");
+            console.log(x);
+            console.log(y);
+
+            console.log("LP");
+            console.log(LP_value);
+            console.log(SHORT_value);
         }
 
         // @dev todo: calculate the amount to supply as LP to uni, and to short
