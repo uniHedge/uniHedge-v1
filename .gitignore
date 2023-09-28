@@ -10,5 +10,8 @@ out/
 # Docs
 docs/
 
+# Vim
+.swp
+
 # Dotenv file
 .env
