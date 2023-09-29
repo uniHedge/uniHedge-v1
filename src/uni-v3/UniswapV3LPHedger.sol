@@ -85,7 +85,6 @@ contract UniswapV3LPHedger is UniswapV3LiquidityProvider {
         userPositions[msg.sender] = data;
     }
 
-
     // @dev currently for the sake of simplicity for the hackathon atm users can only open 1 hedged LP position at a time
     // this will be solved with a simple mapping of address user => array of IDs of positions
     function closeHedgedLP() external {
@@ -124,5 +123,50 @@ contract UniswapV3LPHedger is UniswapV3LiquidityProvider {
         return (x, y);
         // return x = Value*2**96/((sp-sa)*sp*sb/(sb-sp)+sp*sp);
     }
+
+    function findMaxX2(uint p, uint a, uint b, uint vMax) external pure returns (uint) {
+        UD60x18 sp = ud(p).sqrt();
+        UD60x18 sa = ud(a).sqrt();
+        UD60x18 sb = ud(b).sqrt();
+        UD60x18 x2 = ud(vMax).div(
+            (sp - sa).mul(sp * sb).div((sb - sp)) + ud(p)
+        );
+        return unwrap(x2);
+    }
+
+    /*
+    
+    def find_max_x2(p, a, b, vMax): # KZ: find_max_x using brute force method, could cost a large gas fee. and find_max_x2 has the same solution, with less calculation cost
+    sp = p ** 0.5
+    sa = a ** 0.5
+    sb = b ** 0.5
+    x2 = vMax / ((sp - sa) * sp * sb / (sb - sp) + p)
+    return x2
+
+# KZ: find_equal_pnl_values using brute force method, could cost a large gas fee. and find_equal_pnl_values2 has the same solution, with less calculation cost
+# KZ: Moreover, the find_equal_pnl_values2 has better accuracy
+def find_equal_pnl_values2(p, a, b, P1, short_price, maximumValue):
+    # Calculate PNL_V3
+    Virturl_LP=1000 
+
+    x = find_max_x2(p, a, b, Virturl_LP)  # KZ: what's x at p
+    y = Virturl_LP - x * p
+    x1, y1 = calculateAmounts(p, a, b, x, y, P1)
+    value = x * p + y
+    value1 = x1 * P1 + y1
+    PNL_V3 = value1 - value  # KZ: the calculate imp loss
+   
+    # Calculate PNL_short position
+    Virturl_Short=PNL_V3/(P1-short_price)*short_price
+    print("x0 = {:.2f}".format(PNL_V3))
+    print("y0 = {:.2f}".format(Virturl_Short))
+    
+    initial_portfolio_value_v3=Virturl_LP
+    initial_portfolio_value_short=Virturl_Short
+
+    return initial_portfolio_value_v3, initial_portfolio_value_short
+    
+    
+     */
 
 }

@@ -65,4 +65,20 @@ contract UNIV3_IL_HEDGE is Test {
         console.log(amountY);
 
     }
+
+    function testFindMaxX2() public view {
+        console.log("START");
+
+        uint p = 1000e18;
+        uint a = 800e18;
+        uint b = 1200e18;
+
+        uint vMax = 1000e18;
+
+        uint x2 = hedger.findMaxX2(p, a, b, vMax);
+
+        console.log(x2);
+
+
+    }
 }
