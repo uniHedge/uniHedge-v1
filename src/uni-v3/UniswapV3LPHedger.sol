@@ -124,7 +124,7 @@ contract UniswapV3LPHedger is UniswapV3LiquidityProvider {
         // return x = Value*2**96/((sp-sa)*sp*sb/(sb-sp)+sp*sp);
     }
 
-    function findMaxX2(uint p, uint a, uint b, uint vMax) external pure returns (uint) {
+    function findMaxX2(uint p, uint a, uint b, uint vMax) public pure returns (uint) {
         UD60x18 sp = ud(p).sqrt();
         UD60x18 sa = ud(a).sqrt();
         UD60x18 sb = ud(b).sqrt();
@@ -134,14 +134,18 @@ contract UniswapV3LPHedger is UniswapV3LiquidityProvider {
         return unwrap(x2);
     }
 
+    function findEqualPnLValues(uint p, uint a, uint b, uint P1, uint shortPrice, uint maxValue) external view returns (uint, uint) {
+        uint virtualLP = 1000e18;
+
+        uint x = findMaxX2(p, a, b, virtualLP);
+
+        uint y = virtualLP - unwrap(ud(x).mul(p));
+
+        // (uint x1)
+
+    }
+
     /*
-    
-    def find_max_x2(p, a, b, vMax): # KZ: find_max_x using brute force method, could cost a large gas fee. and find_max_x2 has the same solution, with less calculation cost
-    sp = p ** 0.5
-    sa = a ** 0.5
-    sb = b ** 0.5
-    x2 = vMax / ((sp - sa) * sp * sb / (sb - sp) + p)
-    return x2
 
 # KZ: find_equal_pnl_values using brute force method, could cost a large gas fee. and find_equal_pnl_values2 has the same solution, with less calculation cost
 # KZ: Moreover, the find_equal_pnl_values2 has better accuracy
