@@ -116,12 +116,12 @@ contract UniswapV3LPHedger is UniswapV3LiquidityProvider {
         // uint256 numerator1=uint256(sp-sa);
         // uint256 numerator2=uint256(sp-sa);
         // uint256 numerator1 = uint256(Value) << FixedPoint96.RESOLUTION;
-        uint256 numerator1=uint256(Value) << 96;
-        uint256 dividorFirst=FullMath.mulDiv(uint256(sp-sa),uint256(sb),uint256(sb-sp));
-        uint256 dividorSecond=FullMath.mulDiv(numerator1,1<<96,(dividorFirst+sp))/sp;
-        x=dividorSecond;
-        y= Value - FullMath.mulDiv(uint256(sp),uint256(sp),2**96)*x/2**96;
-        return (x,y);
+        uint256 numerator1 = uint256(Value) << 96;
+        uint256 dividorFirst = FullMath.mulDiv(uint256(sp - sa), uint256(sb), uint256(sb - sp));
+        uint256 dividorSecond = FullMath.mulDiv(numerator1, 1<<96, (dividorFirst + sp)) / sp;
+        x = dividorSecond;
+        y = Value - FullMath.mulDiv(uint256(sp), uint256(sp), 2**96) * x / 2**96;
+        return (x, y);
         // return x = Value*2**96/((sp-sa)*sp*sb/(sb-sp)+sp*sp);
     }
 
