@@ -3,18 +3,16 @@ pragma solidity ^0.8.19;
 
 // import "./interfaces/Interfaces.sol";
 import {UD60x18, ud, unwrap} from "@prb/math/UD60x18.sol";
-import "./Leverage.sol";
-import "./Provider.sol";
-
-import "forge-std/console.sol";
-
 import {TickMath} from "@uniswap/v3-core/contracts/libraries/TickMath.sol";
-
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
+import "./Leverage.sol";
+import "./Provider.sol";
+import "./HedgingMath.sol";
+
 import "forge-std/console.sol";
 
-contract UniswapV3LPHedger is UniswapV3LiquidityProvider {
+contract UniswapV3LPHedger is UniswapV3LiquidityProvider, HedgingMath {
     using SafeERC20 for IERC20;
 
     Leverage leverage;
@@ -110,67 +108,5 @@ contract UniswapV3LPHedger is UniswapV3LiquidityProvider {
         IERC20(token1).safeTransfer(msg.sender, bal1_t1 - bal1_t0 + amount1);
     }
 
-    function get_liquidity_xy(uint160 sp, uint160 sa, uint160 sb, uint Value) public pure returns (uint256 x,uint256 y)  { //find_max_x
-        // FullMath.mul()
-        // uint256 numerator1=uint256(sp-sa);
-        // uint256 numerator2=uint256(sp-sa);
-        // uint256 numerator1 = uint256(Value) << FixedPoint96.RESOLUTION;
-        uint256 numerator1 = uint256(Value) << 96;
-        uint256 dividorFirst = FullMath.mulDiv(uint256(sp - sa), uint256(sb), uint256(sb - sp));
-        uint256 dividorSecond = FullMath.mulDiv(numerator1, 1<<96, (dividorFirst + sp)) / sp;
-        x = dividorSecond;
-        y = Value - FullMath.mulDiv(uint256(sp), uint256(sp), 2**96) * x / 2**96;
-        return (x, y);
-        // return x = Value*2**96/((sp-sa)*sp*sb/(sb-sp)+sp*sp);
-    }
-
-    function findMaxX2(uint p, uint a, uint b, uint vMax) public pure returns (uint) {
-        UD60x18 sp = ud(p).sqrt();
-        UD60x18 sa = ud(a).sqrt();
-        UD60x18 sb = ud(b).sqrt();
-        UD60x18 x2 = ud(vMax).div(
-            (sp - sa).mul(sp * sb).div((sb - sp)) + ud(p)
-        );
-        return unwrap(x2);
-    }
-
-    function findEqualPnLValues(uint p, uint a, uint b, uint P1, uint shortPrice, uint maxValue) external view returns (uint, uint) {
-        uint virtualLP = 1000e18;
-
-        uint x = findMaxX2(p, a, b, virtualLP);
-
-        uint y = virtualLP - unwrap(ud(x).mul(p));
-
-        // (uint x1)
-
-    }
-
-    /*
-
-# KZ: find_equal_pnl_values using brute force method, could cost a large gas fee. and find_equal_pnl_values2 has the same solution, with less calculation cost
-# KZ: Moreover, the find_equal_pnl_values2 has better accuracy
-def find_equal_pnl_values2(p, a, b, P1, short_price, maximumValue):
-    # Calculate PNL_V3
-    Virturl_LP=1000 
-
-    x = find_max_x2(p, a, b, Virturl_LP)  # KZ: what's x at p
-    y = Virturl_LP - x * p
-    x1, y1 = calculateAmounts(p, a, b, x, y, P1)
-    value = x * p + y
-    value1 = x1 * P1 + y1
-    PNL_V3 = value1 - value  # KZ: the calculate imp loss
-   
-    # Calculate PNL_short position
-    Virturl_Short=PNL_V3/(P1-short_price)*short_price
-    print("x0 = {:.2f}".format(PNL_V3))
-    print("y0 = {:.2f}".format(Virturl_Short))
-    
-    initial_portfolio_value_v3=Virturl_LP
-    initial_portfolio_value_short=Virturl_Short
-
-    return initial_portfolio_value_v3, initial_portfolio_value_short
-    
-    
-     */
 
 }
